@@ -6,8 +6,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 class CreateEmployee extends Component {
   state = {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     job: "",
   };
 
@@ -23,8 +23,8 @@ class CreateEmployee extends Component {
     e.preventDefault();
 
     const data = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      firstName: this.state.first_name,
+      lastName: this.state.last_name,
       job: this.state.job,
     };
     axios.post("https://reqres.in/api/users/", { data }).then((res) => {
@@ -45,7 +45,7 @@ class CreateEmployee extends Component {
                 type="text"
                 name="firstName"
                 onChange={this.handleChange}
-                value={this.state.firstName}
+                value={this.state.first_name}
                 placeholder="enter the FirstName"
               />
             </Form.Group>
@@ -53,7 +53,7 @@ class CreateEmployee extends Component {
               <Form.Label>LastName</Form.Label>
               <Form.Control
                 name="lastName"
-                value={this.state.lastName}
+                value={this.state.last_name}
                 onChange={this.handleChange}
                 type="text"
                 placeholder="enter the LastName"

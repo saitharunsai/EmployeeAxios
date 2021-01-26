@@ -5,40 +5,28 @@ import { withRouter } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 class Update extends Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    job: "",
-    Names:[]
+  constructor(props){
+    super(props)
+    this.state = {
+    Details: {}
   };
+}
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  async componentDidMount() {
+    const url = "https://reqres.in/api/users/";
+    const response = await fetch(url  + this.props.match.params.id);
+    const data = await response.json();
+    console.log(data);
+    this.setState({ Details: data.data });
+  }
 
-  changeRoute = () => {
-    const { history } = this.props;
-    if (history) history.push("/");
-  };
 
-
-  
-    onSubmit = (e) => {
-    e.preventDefault();
-
-    const data = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      job: this.state.job,
-    };
-    axios.put("https://reqres.in/api/users/2/", { data }).then((res) => {
-      console.log(res);
-      console.log(res.data);
-      this.setState = { data: res.data };
-      this.changeRoute();
+  changeRoute = () =>{
+    const {history} = this.props;
+    if (history ) history.push('/')
     
-    });
-  };
+  }
+
   render() {
     return (
       <>
@@ -50,7 +38,7 @@ class Update extends Component {
                 type="text"
                 name="firstName"
                 onChange={this.handleChange}
-                value={this.state.firstName}
+                value={this.state.Details.first_name}
                 
                 placeholder="enter the FirstName"
               />
@@ -58,8 +46,8 @@ class Update extends Component {
             <Form.Group md="4" controlId="formBasicEmail">
               <Form.Label>LastName</Form.Label>
               <Form.Control
-                name="lastName"
-                value={this.state.lastName}
+                name="last_name"
+                value={this.state.Details.last_name}
                 onChange={this.handleChange}
                 type="text"
                 placeholder="enter the LastName"
@@ -71,8 +59,8 @@ class Update extends Component {
                 type="text"
                 name="job"
                 onChange={this.handleChange}
-                value={this.state.job}
-                placeholder="Enter job"
+                value={this.state.Details.job}
+               
               />
             </Form.Group>
 

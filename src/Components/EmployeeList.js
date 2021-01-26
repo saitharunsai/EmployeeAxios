@@ -55,7 +55,7 @@ class EmployeeList extends Component {
   //For the Update button
   changeRoute2 = () => {
     const { history } = this.props;
-    if (history) history.push("/Update/");
+    if (history) history.push("/Update/:id");
   };
 
   // For 1 item
@@ -110,8 +110,8 @@ class EmployeeList extends Component {
               </tr>
             </thead>
             <tbody>
-              {EmployeeList.map((Employee, index, props) => {
-                const { first_name, last_name, job, id } = Employee;
+              {EmployeeList.map((Employee, index) => {
+                var { first_name, last_name, job, id } = Employee;
                 return (
                   <>
                     <tr key={id}>
@@ -132,16 +132,17 @@ class EmployeeList extends Component {
                           Delete
                         </Button>
                         <Button
-                          onClick={this.changeRoute2}
+                          href={'/Update/'+id}
                           style={{ margin: "15px" }}
                           variant="primary"
                         >
                           Update
                         </Button>
                         <Button
+                        href={'/Details/'+id}
                           style={{ margin: "15px" }}
                           variant="secondary"
-                          onClick={this.changeRoute1}
+                         
                         >
                           Details
                         </Button>

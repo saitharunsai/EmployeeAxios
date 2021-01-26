@@ -5,13 +5,16 @@ import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container'
 import {withRouter} from 'react-router-dom'
 class Details extends React.Component {
-  state = {
-    Details: {},
+  constructor(props){
+    super(props)
+    this.state = {
+    Details: {}
   };
+}
 
   async componentDidMount() {
-    const url = "https://reqres.in/api/users/3";
-    const response = await fetch(url);
+    const url = "https://reqres.in/api/users/";
+    const response = await fetch(url + this.props.match.params.id);
     const data = await response.json();
     console.log(data);
     this.setState({ Details: data.data });
