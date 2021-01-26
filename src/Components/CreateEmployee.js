@@ -23,8 +23,8 @@ class CreateEmployee extends Component {
     e.preventDefault();
 
     const data = {
-      firstName: this.state.first_name,
-      lastName: this.state.last_name,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
       job: this.state.job,
     };
     axios.post("https://reqres.in/api/users/", { data }).then((res) => {
@@ -43,7 +43,7 @@ class CreateEmployee extends Component {
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
-                name="firstName"
+                name="first_name"
                 onChange={this.handleChange}
                 value={this.state.first_name}
                 placeholder="enter the FirstName"
@@ -52,7 +52,7 @@ class CreateEmployee extends Component {
             <Form.Group md="4" controlId="formBasicEmail">
               <Form.Label>LastName</Form.Label>
               <Form.Control
-                name="lastName"
+                name="last_name"
                 value={this.state.last_name}
                 onChange={this.handleChange}
                 type="text"
@@ -72,8 +72,8 @@ class CreateEmployee extends Component {
 
             <Button
               disabled={
-                this.state.firstName < 4 ||
-                this.state.lastName < 4 ||
+                this.state.first_name < 4 ||
+                this.state.last_name < 4 ||
                 this.state.job < 2
                   ? true
                   : false
