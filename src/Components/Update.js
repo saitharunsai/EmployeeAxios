@@ -28,13 +28,15 @@ const Update = (props) => {
   const onSubmit = async e => {
     e.preventDefault();
     await axios.put(`https://reqres.in/api/users/${id}`, Employee);
+    console.log(Response.data)
     history.push("/");
   };
 
   const loadEmployees = async () => {
+    console.log(id)
     const result = await axios.get(`https://reqres.in/api/users/${id}`);
-    setEmployee(result.data);
-    console.log(result.data)
+    setEmployee(result.data.data);
+    console.log()
   };
     return (
       <>
@@ -48,7 +50,6 @@ const Update = (props) => {
                 value={first_name}
                 onChange={e => onInputChange(e)}
                 
-                placeholder="enter the FirstName"
               />
             </Form.Group>
             <Form.Group md="4" controlId="formBasicEmail">
@@ -58,7 +59,7 @@ const Update = (props) => {
                 value={last_name}
                 onChange={e => onInputChange(e)}
                 type="text"
-                placeholder="enter the LastName"
+                
               />
             </Form.Group>
             <Form.Group md="4" controlId="formBasicEmail">
