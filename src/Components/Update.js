@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container'
 import {withRouter} from 'react-router-dom'
 
-const Update = (props) => {
+const Update = () => {
   let history = useHistory();
   const { id } = useParams();
   const [Employee, setEmployee] = useState({
@@ -28,7 +28,6 @@ const Update = (props) => {
   const onSubmit = async e => {
     e.preventDefault();
     await axios.put(`https://reqres.in/api/users/${id}`, Employee);
-    console.log(Response.data)
     history.push("/");
   };
 
@@ -36,7 +35,7 @@ const Update = (props) => {
     console.log(id)
     const result = await axios.get(`https://reqres.in/api/users/${id}`);
     setEmployee(result.data.data);
-    console.log()
+ 
   };
     return (
       <>
