@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class EmployeeList extends Component {
   state = {
@@ -39,7 +40,7 @@ class EmployeeList extends Component {
   componentDidMount() {
     this.getEmployeeList();
   }
-  
+
   // For Create Employees
   changeRoute = () => {
     const { history } = this.props;
@@ -51,12 +52,16 @@ class EmployeeList extends Component {
     const { history } = this.props;
     if (history) history.push("/Details");
   };
+   
 
-  //For the Update button
-  changeRoute2 = () => {
-    const { history } = this.props;
-    if (history) history.push("/Update/:id");
-  };
+  ///  DELETE THE USER USING AXIOS 
+
+  // deleteUser = async id => {
+  //   await axios.delete(`http://localhost:3003/users/${id}`);
+  //   loadUsers();
+  // };
+
+
 
   // For 1 item
   removeItem(index) {
@@ -131,18 +136,16 @@ class EmployeeList extends Component {
                         >
                           Delete
                         </Button>
-                        <Button
-                          href={'/Update/'+id}
-                          style={{ margin: "15px" }}
-                          variant="primary"
+                        <Link
+                          class="btn btn-outline-primary mr-2"
+                          to={`/update/${id}`}
                         >
                           Update
-                        </Button>
+                        </Link>
                         <Button
-                        href={'/Details/'+id}
+                          href={"/Details/" + id}
                           style={{ margin: "15px" }}
                           variant="secondary"
-                         
                         >
                           Details
                         </Button>

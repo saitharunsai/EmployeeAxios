@@ -1,43 +1,52 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Form from "react-bootstrap/Form";
-import { withRouter } from "react-router-dom";
+import { useHistory,useParams} from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-class Update extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-    Details: {}
+import Container from 'react-bootstrap/Container'
+import {withRouter} from 'react-router-dom'
+
+const Update = (props) => {
+  let history = useHistory();
+  const { id } = useParams();
+  const [Employee, setEmployee] = useState({
+    first_name: "",
+    last_name: "",
+    job: "",
+  });
+
+  const { first_name,last_name, job } = Employee;
+  const onInputChange = e => {
+    setEmployee({ ...Employee, [e.target.name]: e.target.value });
   };
-}
 
-  async componentDidMount() {
-    const url = "https://reqres.in/api/users/";
-    const response = await fetch(url  + this.props.match.params.id);
-    const data = await response.json();
-    console.log(data);
-    this.setState({ Details: data.data });
-  }
+  useEffect(() => {
+    loadEmployees();
+  }, []);
 
+  const onSubmit = async e => {
+    e.preventDefault();
+    await axios.put(`https://reqres.in/api/users/${id}`, Employee);
+    history.push("/");
+  };
 
-  changeRoute = () =>{
-    const {history} = this.props;
-    if (history ) history.push('/')
-    
-  }
-
-  render() {
+  const loadEmployees = async () => {
+    const result = await axios.get(`https://reqres.in/api/users/${id}`);
+    setEmployee(result.data);
+    console.log(result.data)
+  };
     return (
       <>
         <Container>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={e => onSubmit(e)} >
             <Form.Group md="4" controlId="formBasicText">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
-                name="firstName"
-                onChange={this.handleChange}
-                value={this.state.Details.first_name}
+                name="first_name"
+                value={first_name}
+                onChange={e => onInputChange(e)}
                 
                 placeholder="enter the FirstName"
               />
@@ -46,8 +55,8 @@ class Update extends Component {
               <Form.Label>LastName</Form.Label>
               <Form.Control
                 name="last_name"
-                value={this.state.Details.last_name}
-                onChange={this.handleChange}
+                value={last_name}
+                onChange={e => onInputChange(e)}
                 type="text"
                 placeholder="enter the LastName"
               />
@@ -57,20 +66,13 @@ class Update extends Component {
               <Form.Control
                 type="text"
                 name="job"
-                onChange={this.handleChange}
-                value={this.state.Details.job}
-               
+                value={job}
+                onChange={e => onInputChange(e)}
               />
             </Form.Group>
 
             <Button
-              disabled={
-                this.state.firstName < 4 ||
-                this.state.lastName < 4 ||
-                this.state.job < 2
-                  ? true
-                  : false
-              }
+              
               variant="primary"
               type="submit"
             >
@@ -81,6 +83,6 @@ class Update extends Component {
       </>
     );
   }
-}
+
 
 export default withRouter(Update);
